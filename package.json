@@ -8,6 +8,7 @@
     "start": "node index.js",
     "test": "jest",
     "test:verbose": "jest --verbose",
+    "test:watch": "jest --watch",
     "lint": "eslint . --ext .js",
     "lint:fix": "eslint . --ext .js --fix"
   },
@@ -50,5 +51,5 @@
   },
   "homepage": "https://github.com/docmirror/dev-sidecar#readme",
   "_note": "personal fork for learning purposes - upstream: docmirror/dev-sidecar",
-  "_local_notes": "added test:verbose script for easier debugging when tests fail"
+  "_local_notes": "added test:verbose script for easier debugging when tests fail; added test:watch for dev workflow"
 }

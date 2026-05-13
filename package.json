@@ -10,6 +10,7 @@
     "test:verbose": "jest --verbose",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "test:ci": "jest --ci --forceExit",
     "lint": "eslint . --ext .js",
     "lint:fix": "eslint . --ext .js --fix"
   },
@@ -42,7 +43,10 @@
   },
   "jest": {
     "testTimeout": 30000,
-    "verbose": true
+    "verbose": true,
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ]
   },
   "engines": {
     "node": ">=18.0.0"
@@ -56,5 +60,5 @@
   },
   "homepage": "https://github.com/docmirror/dev-sidecar#readme",
   "_note": "personal fork for learning purposes - upstream: docmirror/dev-sidecar",
-  "_local_notes": "added test:verbose script for easier debugging when tests fail; added test:watch for dev workflow; added test:coverage and bumped jest timeout to 20s since some proxy tests can be slow on my machine; enabled verbose by default so I always see individual test names; bumped timeout further to 30s because I kept hitting timeouts on flaky network days"
+  "_local_notes": "added test:verbose script for easier debugging when tests fail; added test:watch for dev workflow; added test:coverage and bumped jest timeout to 20s since some proxy tests can be slow on my machine; enabled verbose by default so I always see individual test names; bumped timeout further to 30s because I kept hitting timeouts on flaky network days; added test:ci for running in a clean environment with --forceExit so jest doesn't hang; added testPathIgnorePatterns explicitly just to be safe"
 }

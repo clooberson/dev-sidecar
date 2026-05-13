@@ -52,7 +52,12 @@
       "!**/node_modules/**",
       "!**/coverage/**",
       "!jest.config.js"
-    ]
+    ],
+    "coverageThreshold": {
+      "global": {
+        "lines": 50
+      }
+    }
   },
   "engines": {
     "node": ">=18.0.0"
@@ -66,5 +71,5 @@
   },
   "homepage": "https://github.com/docmirror/dev-sidecar#readme",
   "_note": "personal fork for learning purposes - upstream: docmirror/dev-sidecar",
-  "_local_notes": "added test:verbose script for easier debugging when tests fail; added test:watch for dev workflow; added test:coverage and bumped jest timeout to 20s since some proxy tests can be slow on my machine; enabled verbose by default so I always see individual test names; bumped timeout further to 30s because I kept hitting timeouts on flaky network days; added test:ci for running in a clean environment with --forceExit so jest doesn't hang; added testPathIgnorePatterns explicitly just to be safe; added collectCoverageFrom so coverage report actually covers the right files and ignores noise"
+  "_local_notes": "added test:verbose script for easier debugging when tests fail; added test:watch for dev workflow; added test:coverage and bumped jest timeout to 20s since some proxy tests can be slow on my machine; enabled verbose by default so I always see individual test names; bumped timeout further to 30s because I kept hitting timeouts on flaky network days; added test:ci for running in a clean environment with --forceExit so jest doesn't hang; added testPathIgnorePatterns explicitly just to be safe; added collectCoverageFrom so coverage report actually covers the right files and ignores noise; added coverageThreshold at 50% lines just so I notice if I accidentally delete a bunch of tested code"
 }

@@ -1,15 +1,78 @@
-const expose = require('./expose.js')
-const log = require('./utils/util.log.core')
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+/**
+ * dev-sidecar core module
+ * Main entry point for the core package
+ */
 
-// 避免异常崩溃
-process.on('uncaughtException', (err) => {
-  log.error('Process Uncaught Exception:', err)
-})
+'use strict'
 
-process.on('unhandledRejection', (reason, p) => {
-  log.error('Process Unhandled Rejection at: Promise:', p, ', reason:', reason)
-  // application specific logging, throwing an error, or other logic here
-})
+const proxy = require('./proxy')
+const config = require('./config')
+const api = require('./api')
 
-module.exports = expose
+const Core = {
+  /**
+   * Initialize the core module with optional config overrides
+   * @param {object} options - Initialization options
+   * @param {object} options.config - Config overrides
+   * @param {function} options.logger - Custom logger function
+   */
+  async start(options = {}) {
+    // Load and merge configuration
+    await config.load(options.config)
+
+    // Set up logger
+    if (options.logger) {
+      this.logger = options.logger
+    }
+
+    // Start proxy server
+    await proxy.start(config.get())
+
+    console.log('[dev-sidecar] Core started successfully')
+    return this
+  },
+
+  /**
+   * Stop all running services
+   */
+  async stop() {
+    await proxy.stop()
+    console.log('[dev-sidecar] Core stopped')
+  },
+
+  /**
+   * Restart the core services
+   */
+  async restart() {
+    await this.stop()
+    await this.start()
+  },
+
+  /**
+   * Get current status of the proxy
+   * @returns {object} Status object
+   */
+  status() {
+    return {
+      proxy: proxy.status(),
+      config: config.get(),
+    }
+  },
+
+  /**
+   * Expose config module for external access
+   */
+  config,
+
+  /**
+   * Expose proxy module for external access
+   */
+  proxy,
+
+  /**
+   * Expose API module for external access
+   */
+  api,
+}
+
+module.exports = Core

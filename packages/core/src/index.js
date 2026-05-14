@@ -15,6 +15,7 @@ const Core = {
    * @param {object} options - Initialization options
    * @param {object} options.config - Config overrides
    * @param {function} options.logger - Custom logger function
+   * @param {boolean} options.silent - Suppress startup logs
    */
   async start(options = {}) {
     // Load and merge configuration
@@ -28,7 +29,10 @@ const Core = {
     // Start proxy server
     await proxy.start(config.get())
 
-    console.log('[dev-sidecar] Core started successfully')
+    // Allow silent mode to suppress console output (handy when embedding)
+    if (!options.silent) {
+      console.log('[dev-sidecar] Core started successfully')
+    }
     return this
   },
 
